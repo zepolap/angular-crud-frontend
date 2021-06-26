@@ -6,7 +6,6 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { TopBarComponent } from './top-bar/top-bar.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
-import { AddCustomerComponent } from './add-customer/add-customer.component';
 import { MessageComponent } from './message/message.component';
 import { HttpClientModule } from '@angular/common/http';
 
@@ -15,7 +14,6 @@ import { HttpClientModule } from '@angular/common/http';
     AppComponent,
     TopBarComponent,
     CustomerListComponent,
-    AddCustomerComponent,
     MessageComponent
   ],
   imports: [

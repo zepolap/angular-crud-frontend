@@ -9,8 +9,8 @@
 							<h2>Manage Customers</h2>
 						</div>
                         <div class="col-xs-6">
-                            <a href="#addEmployeeModal" class="btn btn-success" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Add New Employee</span></a>
-                            <a href="#deleteEmployeeModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+                            <a href="#addCustomerModal" class="btn btn-success" data-toggle="modal" (click)="setNewCustomerDetails()"><i class="material-icons">&#xE147;</i> <span>Add New Customer</span></a>
+                            <a href="#deleteCustomerModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
                         </div>
 					</div>
 				</div>
@@ -35,8 +35,8 @@
 						<tr *ngFor="let customer of customers">
 							<td>
 								<span class="custom-checkbox">
-									<input type="checkbox" id="checkbox1" name="options[]" value="1">
-									<label for="checkbox1"></label>
+									<input type="checkbox" id="{{customer.id}}" value="1">
+									<label for="checkbox{{customer.id}}"></label>
 								</span>
 							</td>
 							<td>{{customer.id}}</td>
@@ -45,8 +45,8 @@
 							<td>{{customer.age}}</td>
               				<td>{{customer.address}}</td>
 							<td>
-								<a href="#editEmployeeModal" class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
-								<a href="#deleteEmployeeModal" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+								<a href="#editCustomerModal" class="edit" data-toggle="modal" (click)="setCustomerDetails(customer)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+								<a href="#deleteCustomerModal" class="delete" data-toggle="modal" (click)="prepareDeleteCustomer(customer)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
 							</td>
 						</tr>
 					</tbody>
@@ -66,8 +66,169 @@
 			</div>
 		</div>        
     </div>
-
-  	<app-message></app-message>
-  
 </section>
+
+<!-- Add Modal HTML -->
+<div id="addCustomerModal" class="modal fade" *ngIf="showCustomer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form (ngSubmit)="createCustomer()">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Add Customer</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Firstname</label>
+                        <input type="text" class="form-control"
+                        id="firstname" required [(ngModel)]="showCustomer.firstname" name="firstname">
+                    </div>
+                    <div class="form-group">
+                        <label>Lastname</label>
+                        <input type="text" class="form-control"
+                        id="lastname" required [(ngModel)]="showCustomer.lastname" name="lastname">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" class="form-control"
+                        id="age" required [(ngModel)]="showCustomer.age" name="age">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control"
+                        id="address" required [(ngModel)]="showCustomer.address" name="address">
+                    </div>
+                    					
+                </div>
+                <div class="modal-footer">
+                    <input id="closeAdd" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="retrieveAllCustomers()">
+					<input type="submit" class="btn btn-success" value="Add">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Edit Modal HTML -->
+<div id="editCustomerModal" class="modal fade" *ngIf="showCustomer">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form (ngSubmit)="updateCustomer()">
+                <div class="modal-header">						
+                    <h4 class="modal-title">Edit Customer</h4>
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">					
+                    <div class="form-group">
+                        <label>Firstname</label>
+                        <input type="text" class="form-control"
+                        id="editFirstname" required [(ngModel)]="showCustomer.firstname" name="editFirstname">
+                    </div>
+                    <div class="form-group">
+                        <label>Lastname</label>
+                        <input type="text" class="form-control"
+                        id="editLastname" required [(ngModel)]="showCustomer.lastname" name="editLastname">
+                    </div>
+                    <div class="form-group">
+                        <label>Age</label>
+                        <input type="number" class="form-control"
+                        id="editAge" required [(ngModel)]="showCustomer.age" name="editAge">
+                    </div>
+                    <div class="form-group">
+                        <label>Address</label>
+                        <input type="text" class="form-control"
+                        id="editAddress" required [(ngModel)]="showCustomer.address" name="editAddress">
+                    </div>
+                    					
+                </div>
+                <div class="modal-footer">
+                    <input id="closeUpdate" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="retrieveAllCustomers()">
+                    <input type="submit" class="btn btn-success" value="Update">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Delete Modal HTML -->
+<div id="deleteCustomerModal" class="modal fade" *ngIf="deletedCustomer">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">Delete Customer</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div>					
+						<p> 
+							Do you want delete a customer with id = {{deletedCustomer.id}}
+						</p>
+						<p class="text-warning"
+							><small>This action cannot be undone.</small>
+						</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input id="closeDelete" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="retrieveAllCustomers()">
+					<input type="button" class="btn btn-danger" value="Delete" (click)="deleteCustomer()">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- Message Modal HTML -->
+<div id="messageCustomerModal" class="modal fade">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">Message</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div>					
+						<p>
+							{{returnedMessage}}
+						</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input type="button" class="btn btn-default" data-dismiss="modal" value="Aceptar" (click)="retrieveAllCustomers()">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<script>
+	$(document).ready(function(){
+		// Activate tooltip
+		$('[data-toggle="tooltip"]').tooltip();
+		
+		// Select/Deselect checkboxes
+		var checkbox = $('table tbody input[type="checkbox"]');
+		$("#selectAll").click(function(){
+			if(this.checked){
+				checkbox.each(function(){
+					this.checked = true;                        
+				});
+			} else{
+				checkbox.each(function(){
+					this.checked = false;                        
+				});
+			} 
+		});
+		checkbox.click(function(){
+			if(!this.checked){
+				$("#selectAll").prop("checked", false);
+			}
+		});
+	});
+</script>
+
+<app-message></app-message>
+  
+
 
