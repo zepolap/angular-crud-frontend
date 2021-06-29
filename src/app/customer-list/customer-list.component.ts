@@ -11,17 +11,17 @@ import { Message } from '../message';
 
 export class CustomerListComponent implements OnInit {
 
-  undefinedCustomer = {"id": 0, "firstname": "", "lastname": "", "age": 0, "address": ""};
+  undefinedCustomer = {"id": 0, "firstname": "", "lastname": "", "age": 0, "address": "", "isSelected": false};
   customers: Array<Customer> = [];
   showCustomer: Customer = this.undefinedCustomer;
   isSelected: boolean = false;
   deletedCustomer: Customer  = this.undefinedCustomer;
   returnedMessage!: string;
   IsmodelShow: boolean=false;
-
   element!: HTMLElement;
 
-
+  isMasterSel:boolean=false;
+  checkedCategoryList:any;
 
   constructor(private customerService: CustomerService,
                 private messageService: MessageService) { }
@@ -40,6 +40,35 @@ export class CustomerListComponent implements OnInit {
     if(this.isSelected){
       this.showCustomer = customer;
     }
+  }
+
+  /**
+  * Check all and unchek all checkboxes
+  */  
+  checkUncheckAll() {
+    for (var i = 0; i < this.customers.length; i++) {
+      this.customers[i].isSelected = this.isMasterSel;
+    }
+    this.getCheckedItemList();
+  }
+   
+  isAllSelected() {
+    this.isMasterSel = this.customers.every(function(item:any) {
+        return item.isSelected == true;
+      })
+    this.getCheckedItemList();
+  }
+  
+  getCheckedItemList(){
+    this.checkedCategoryList = [];
+    for (var i = 0; i < this.customers.length; i++) {
+      if(this.customers[i].isSelected)
+      this.checkedCategoryList.push(this.customers[i]);
+    }
+    this.checkedCategoryList = JSON.stringify(this.checkedCategoryList);
+    
+    // add the checkedCategoryList to message app for showing
+    this.messageService.add(this.checkedCategoryList);
   }
 
   /**

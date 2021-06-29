@@ -19,7 +19,7 @@
 						<tr>
 							<th>
 								<span class="custom-checkbox">
-									<input type="checkbox" id="selectAll">
+									<input type="checkbox" [(ngModel)]="isMasterSel" id="selectAll" (change)="checkUncheckAll()">
 									<label for="selectAll"></label>
 								</span>
 							</th>
@@ -35,7 +35,7 @@
 						<tr *ngFor="let customer of customers">
 							<td>
 								<span class="custom-checkbox">
-									<input type="checkbox" id="{{customer.id}}" value="1">
+									<input type="checkbox" [(ngModel)]="customer.isSelected" id="{{customer.id}}" value="1" (change)="isAllSelected()">
 									<label for="checkbox{{customer.id}}"></label>
 								</span>
 							</td>
@@ -201,32 +201,6 @@
 		</div>
 	</div>
 </div>
-
-<script>
-	$(document).ready(function(){
-		// Activate tooltip
-		$('[data-toggle="tooltip"]').tooltip();
-		
-		// Select/Deselect checkboxes
-		var checkbox = $('table tbody input[type="checkbox"]');
-		$("#selectAll").click(function(){
-			if(this.checked){
-				checkbox.each(function(){
-					this.checked = true;                        
-				});
-			} else{
-				checkbox.each(function(){
-					this.checked = false;                        
-				});
-			} 
-		});
-		checkbox.click(function(){
-			if(!this.checked){
-				$("#selectAll").prop("checked", false);
-			}
-		});
-	});
-</script>
 
 <app-message></app-message>
   
