@@ -11,6 +11,7 @@ import { Message } from '../message';
 
 export class CustomerListComponent implements OnInit {
 
+  public page: number=1;
   undefinedCustomer = {"id": 0, "firstname": "", "lastname": "", "age": 0, "address": "", "isSelected": false};
   customers: Array<Customer> = [];
   showCustomer: Customer = this.undefinedCustomer;

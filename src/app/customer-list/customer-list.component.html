@@ -32,7 +32,9 @@
 						</tr>
 					</thead>
 					<tbody>
-						<tr *ngFor="let customer of customers">
+						<tr *ngFor="let customer of customers
+									| paginate: { itemsPerPage: 5, currentPage: page }"
+						>
 							<td>
 								<span class="custom-checkbox">
 									<input type="checkbox" [(ngModel)]="customer.isSelected" id="{{customer.id}}" value="1" (change)="isAllSelected()">
@@ -52,16 +54,11 @@
 					</tbody>
 				</table>
                 <div class="clearfix">
-					<div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-					<ul class="pagination">
-						<li class="page-item disabled"><a href="#">Previous</a></li>
-						<li class="page-item"><a href="#" class="page-link">1</a></li>
-						<li class="page-item"><a href="#" class="page-link">2</a></li>
-						<li class="page-item active"><a href="#" class="page-link">3</a></li>
-						<li class="page-item"><a href="#" class="page-link">4</a></li>
-						<li class="page-item"><a href="#" class="page-link">5</a></li>
-						<li class="page-item"><a href="#" class="page-link">Next</a></li>
-					</ul>
+					<pagination-controls
+						(pageChange)="page = $event"
+						previousLabel="Previous"
+						nextLabel="Next">
+					</pagination-controls>
 				</div>
 			</div>
 		</div>        
