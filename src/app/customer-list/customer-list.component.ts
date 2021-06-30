@@ -24,6 +24,12 @@ export class CustomerListComponent implements OnInit {
   isMasterSel:boolean=false;
   checkedCategoryList:any;
 
+  // Tooltips Options
+  myOptions = {
+    'placement': 'top',
+    'hideDelay': 0
+  }
+
   constructor(private customerService: CustomerService,
                 private messageService: MessageService) { }
 

@@ -47,8 +47,12 @@
 							<td>{{customer.age}}</td>
               				<td>{{customer.address}}</td>
 							<td>
+								<span tooltip="Edit" [options]="myOptions">
 								<a href="#editCustomerModal" class="edit" data-toggle="modal" (click)="setCustomerDetails(customer)"><i class="material-icons" data-toggle="tooltip" title="Edit">&#xE254;</i></a>
+								</span>
+								<span tooltip="Delete" [options]="myOptions">
 								<a href="#deleteCustomerModal" class="delete" data-toggle="modal" (click)="prepareDeleteCustomer(customer)"><i class="material-icons" data-toggle="tooltip" title="Delete">&#xE872;</i></a>
+								</span>
 							</td>
 						</tr>
 					</tbody>
