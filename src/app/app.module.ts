@@ -10,13 +10,15 @@ import { TopBarComponent } from './top-bar/top-bar.component';
 import { CustomerListComponent } from './customer-list/customer-list.component';
 import { MessageComponent } from './message/message.component';
 import { HttpClientModule } from '@angular/common/http';
+import { AuthorComponent } from './author/author.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TopBarComponent,
     CustomerListComponent,
-    MessageComponent
+    MessageComponent,
+    AuthorComponent
   ],
   imports: [
     BrowserModule,

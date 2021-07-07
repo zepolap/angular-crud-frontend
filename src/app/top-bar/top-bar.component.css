@@ -48,3 +48,21 @@ header h1 {
 color: #1976d2;
 padding-right: 4px;
 }
+
+nav a {
+  text-decoration:none;
+  color:inherit;
+  font-size:14px;
+} 
+nav li { 
+  display:inline-block;
+  width:10%;
+  padding:5px 10px;
+  background-color: #095097;
+  text-align:center;
+  color:#fff;
+}
+nav li:hover {
+  background-color:#1976d2;
+  color:#fff;
+}
