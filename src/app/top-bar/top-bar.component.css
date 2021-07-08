@@ -71,14 +71,31 @@ nav li {
 }
 nav a {
 	display: block;
-	padding: 1em;
+	padding: 0.5em;
 	text-align: center;
 	text-decoration: none;
   color:#fff;
-	border: solid 1px #424242;
 	transition: all 0.5s;
 }
 nav a:hover {
 	background-color:#1976d2;
   color:#fff; 
 }
+
+@media (orientation: landscape) {
+  nav ul {
+    flex-direction: row;
+  }
+  a {
+    margin-right:0.2em;
+  }
+}
+@media (orientation: portrait) {
+  nav ul {
+    flex-direction: column;
+  }
+  nav a {
+    margin-bottom:0.2em;
+  }
+}
+  

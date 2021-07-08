@@ -1,0 +1,38 @@
+.author {
+	display:grid;
+    width: 30%;
+	grid-gap: 0.5rem;
+	padding: 1rem;
+	background-color:LightGray ;
+}
+.author img {
+	width:50%;
+	height:auto;
+	transition:all 1s;
+}
+
+.logos {
+    padding: 1rem;
+}
+.logos img {
+	width:10%;
+	height:auto;
+    padding: 1rem;
+	transition:all 1s;
+}
+.logos img:hover {
+	filter:invert(100%);
+}
+
+@media (orientation: landscape) {
+    aside {
+        grid-template-columns: 1fr;
+        grid-template-rows: auto auto auto;
+    }   
+}
+@media (orientation: portrait) {
+    aside {
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
+    }
+}
