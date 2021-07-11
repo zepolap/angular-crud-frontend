@@ -12,7 +12,7 @@
 						</div>
                         <div class="col-xs-6">
                             <a href="#addCustomerModal" class="btn btn-success" data-toggle="modal" (click)="setNewCustomerDetails()"><i class="material-icons">&#xE147;</i> <span>Add New Customer</span></a>
-                            <a href="#deleteCustomerModal" class="btn btn-danger" data-toggle="modal"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
+                            <a href="#listDeleteCustomersModal" class="btn btn-danger" data-toggle="modal" (click)="prepareListDeleteCustomers()"><i class="material-icons">&#xE15C;</i> <span>Delete</span></a>						
                         </div>
 					</div>
 				</div>
@@ -175,6 +175,34 @@
 				<div class="modal-footer">
 					<input id="closeDelete" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="retrieveAllCustomers()">
 					<input type="button" class="btn btn-danger" value="Delete" (click)="deleteCustomer()">
+				</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+<!-- List Delete Modal HTML -->
+<div id="listDeleteCustomersModal" class="modal fade" *ngIf="listDeletedCustomers">
+	<div class="modal-dialog">
+		<div class="modal-content">
+			<form>
+				<div class="modal-header">						
+					<h4 class="modal-title">List Delete Customers</h4>
+					<button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+				</div>
+				<div class="modal-body">
+					<div>					
+						<p> 
+							Do you want delete a customer with id = {{listDeletedCustomers}}
+						</p>
+						<p class="text-warning"
+							><small>This action cannot be undone.</small>
+						</p>
+					</div>
+				</div>
+				<div class="modal-footer">
+					<input id="closeListDeleteCustomers" type="button" class="btn btn-default" data-dismiss="modal" value="Cancel" (click)="retrieveAllCustomers()">
+					<input type="button" class="btn btn-danger" value="Delete" (click)="deleteListCustomers()">
 				</div>
 			</form>
 		</div>

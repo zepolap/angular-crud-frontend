@@ -23,6 +23,8 @@ export class CustomerListComponent implements OnInit {
 
   isMasterSel:boolean=false;
   checkedCategoryList:any;
+  listDeletedCustomers:any;
+
 
   // Tooltips Options
   myOptions = {
@@ -85,6 +87,27 @@ export class CustomerListComponent implements OnInit {
   prepareDeleteCustomer(deleteCustomer: Customer){
     //assign delete-Customer
     this.deletedCustomer = deleteCustomer;
+    // reset returned-Message
+    this.returnedMessage = "";
+  }
+
+  /**
+   * Set listDeletedCustomers and reset returnedMessage = undefined
+   * @param deleteCustomer
+   */
+   prepareListDeleteCustomers(){
+    var objeto;
+
+    if (this.checkedCategoryList) {
+      this.listDeletedCustomers = [];
+      objeto = JSON.parse(this.checkedCategoryList);
+
+      //assign List-Deleted-Customers
+      for (var i = 0; i < objeto.length; i++) {
+          this.listDeletedCustomers.push(objeto[i].id);
+      }
+    }
+    
     // reset returned-Message
     this.returnedMessage = "";
   }
@@ -163,6 +186,45 @@ export class CustomerListComponent implements OnInit {
                           let errMsg: string = "Error! Details: " + error;
                           this.messageService.add(errMsg);
                         });
+  }
+
+  /**
+   * Delete a List of Customer by IDs
+   */
+   deleteListCustomers(){
+
+    console.log("--- Access delelteListCustomers() function");
+
+    for (var i = 0; i < this.listDeletedCustomers.length; i++) {
+   
+      this.customerService.deleteCustomer(this.listDeletedCustomers[i])
+                        .subscribe((message: Message) => {
+                            console.log(message);
+                            // remove a deletedCustomer from customers list on view
+                            this.customers = this.customers.filter(customer => {
+                              return customer.id != this.deletedCustomer.id;
+                            })
+
+                            // set a showing message in delete modal
+                            this.returnedMessage = message.message;
+
+                            // just reset showCustomer for not showing on view
+                            this.showCustomer = this.undefinedCustomer;
+
+                            // add the delete message to message app for showing
+                            this.messageService.add(message.message);
+
+                          }, (error) => {
+                            console.log(error);
+                            let errMsg: string = "Error! Details: " + error;
+                            this.messageService.add(errMsg);
+                          });
+    }
+    // show message
+    alert("Successfully deleted customers with id: " + this.listDeletedCustomers);
+
+    // close Delete window
+    this.fakeClick('closeListDeleteCustomers');
   }
 
   /**
